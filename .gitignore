@@ -13,3 +13,19 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 .idea/workspace.xml
+sandbox/build/classes/java/main/ru/stqa/pft/sandbox/Rectangle.class
+sandbox/build/classes/java/main/ru/stqa/pft/sandbox/Square.class
+sandbox/build/tmp/compileJava/previous-compilation-data.bin
+sandbox/src/test/java/ru/stqa/pft/sandbox/SquareTests.java
+sandbox/src/main/java/ru/stqa/pft/sandbox/Square.java
+sandbox/src/main/java/ru/stqa/pft/sandbox/Rectangle.java
+sandbox/out/test/classes/ru/stqa/pft/sandbox/SquareTests.class
+sandbox/out/production/classes/ru/stqa/pft/sandbox/Square.class
+sandbox/out/production/classes/ru/stqa/pft/sandbox/Rectangle.class
+sandbox/out/production/classes/ru/stqa/pft/sandbox/Point.class
+sandbox/out/production/classes/ru/stqa/pft/sandbox/MyFirstProgram.class
+sandbox/build.gradle
+.idea/misc.xml
+.idea/jarRepositories.xml
+.idea/gradle.xml
+.idea/.name
