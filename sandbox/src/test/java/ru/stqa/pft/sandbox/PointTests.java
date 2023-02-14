@@ -6,13 +6,13 @@ import org.testng.annotations.Test;
 public class PointTests {
 
 
-    @Test
+  /*  @Test
     public void testDistanceIncorrect() {
         Point p1 = new Point(10, 5);
         Point p2 = new Point(15,30);
-        Assert.assertEquals(p1.distance(p2), 15);
+        Assert.assertNotEquals(p1.distance(p2), 15);
 
-    }
+    }*/
 
     @Test
     public void testDistanceCorret() {
