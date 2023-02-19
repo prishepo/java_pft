@@ -22,6 +22,14 @@ public class TestBase {
         login("admin", "secret");
     }
 
+    protected void logout() {
+        wd.findElement(By.linkText("Logout")).click();
+    }
+
+    protected void gotoContactCreationPage() {
+        wd.findElement(By.linkText("add new")).click();
+    }
+
     private void login(String username, String password) {
         wd.get("http://localhost/addressbook/");
         wd.findElement(By.name("user")).clear();
@@ -32,9 +40,34 @@ public class TestBase {
         wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
-    protected void logout() {
-        wd.findElement(By.linkText("Logout")).click();
+    protected void submitContactCreation() {
+        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
+
+    protected void fillContactForm(ContactData contactData) {
+        wd.findElement(By.name("firstname")).click();
+        wd.findElement(By.name("firstname")).clear();
+        wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
+        wd.findElement(By.name("middlename")).click();
+        wd.findElement(By.name("middlename")).clear();
+        wd.findElement(By.name("middlename")).sendKeys(contactData.getMiddleName());
+        wd.findElement(By.name("lastname")).click();
+        wd.findElement(By.name("lastname")).clear();
+        wd.findElement(By.name("lastname")).sendKeys(contactData.getSecondName());
+        wd.findElement(By.name("company")).click();
+        wd.findElement(By.name("company")).clear();
+        wd.findElement(By.name("company")).sendKeys(contactData.getCompanyName());
+        wd.findElement(By.name("address")).click();
+        wd.findElement(By.name("address")).clear();
+        wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
+        wd.findElement(By.name("mobile")).click();
+        wd.findElement(By.name("mobile")).clear();
+        wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilePhoneNumber());
+        wd.findElement(By.name("email")).click();
+        wd.findElement(By.name("email")).clear();
+        wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+    }
+
 
     protected void returnToGroupPage() {
         wd.findElement(By.linkText("group page")).click();
@@ -65,10 +98,12 @@ public class TestBase {
         wd.findElement(By.linkText("groups")).click();
     }
 
+
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
         wd.quit();
     }
+
 
     private boolean isElementPresent(By by) {
         try {
@@ -79,6 +114,15 @@ public class TestBase {
         }
     }
 
+
+    protected void deleteSelectedGroups() {
+        wd.findElement(By.name("delete")).click();
+    }
+
+    protected void selectGroup() {
+        wd.findElement(By.name("selected[]")).click();
+    }
+
     private boolean isAlertPresent() {
         try {
             wd.switchTo().alert();
@@ -86,13 +130,5 @@ public class TestBase {
         } catch (NoAlertPresentException e) {
             return false;
         }
-    }
-
-    protected void deleteSelectedGroups() {
-      wd.findElement(By.name("delete")).click();
-    }
-
-    protected void selectGroup() {
-      wd.findElement(By.name("selected[]")).click();
     }
 }
