@@ -3,7 +3,9 @@ package ru.stqu.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import ru.stqu.pft.addressbook.model.ContactData;
 
 import java.time.Duration;
@@ -18,7 +20,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"),contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
         type(By.name("lastname"),contactData.getSecondName());
@@ -26,6 +28,15 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"),contactData.getAddress());
         type(By.name("mobile"),contactData.getMobilePhoneNumber());
         type(By.name("email"),contactData.getEmail());
+
+
+
+       if (creation){
+           new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+       } else {
+           Assert.assertFalse(isElementPresent(By.name("new_group")));
+       }
+
     }
 
     public void submitContactModification() {
