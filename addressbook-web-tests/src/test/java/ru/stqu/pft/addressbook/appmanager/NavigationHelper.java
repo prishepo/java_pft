@@ -8,11 +8,6 @@ public class NavigationHelper extends HelperBase {
         super(wd);
     }
 
-    public void gotoContactCreationPage() {
-        click(By.linkText("add new"));
-    }
-
-
 
     public void gotoGroupPage() {
 
