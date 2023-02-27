@@ -18,7 +18,7 @@ public class ContactCreationTests extends TestBase{
         *//*WebElement groupFromGroupPage = app.wd.findElement(By.name("selected[]"));
         String group = groupFromGroupPage.getText();*/
 
-        if (!app.getContactHelper().isThereAGroupInContactCreationForm("//select[@name='new_group']//option[text()='test1']")){
+        if (!app.getContactHelper().isThereAGroupInContactCreationForm("test1")){
             app.getNavigationHelper().gotoGroupPage();
             app.getGroupHelper().createGroup(new GroupData("test1", null, null));
 
