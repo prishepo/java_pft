@@ -3,6 +3,7 @@ package ru.stqu.pft.addressbook.tests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqu.pft.addressbook.appmanager.ApplicationManager;
 import ru.stqu.pft.addressbook.model.ContactData;
@@ -20,6 +21,7 @@ public class ContactCreationTests extends TestBase{
         }
         String group = app.wd.findElement(By.name("selected[]")).getAttribute("value");*/
 
+        int before = app.getContactHelper().getContactCount();
 
         if (!app.getContactHelper().isThereAGroupInContactCreationForm("test1")){
             app.getNavigationHelper().gotoGroupPage();
@@ -29,7 +31,8 @@ public class ContactCreationTests extends TestBase{
         app.getContactHelper().createContact(new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
                 "Moscow, Tushinskaya st, 17", "+71234567890",
                 "ivanov1981@yandex123.ru", "test1"));
-        app.getSessionHelper().logout();
+        int after = app.getContactHelper().getContactCount();
+        Assert.assertEquals(after, before + 1);
 
     }
 

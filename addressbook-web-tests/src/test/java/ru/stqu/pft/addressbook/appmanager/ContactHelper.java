@@ -43,7 +43,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void gotoHomePage() {
-        click(By.linkText("home page"));
+        click(By.linkText("home"));
     }
 
     public void editContact() {
@@ -77,6 +77,10 @@ public class ContactHelper extends HelperBase {
     public boolean isThereAGroupInContactCreationForm(String group) {
         gotoContactCreationPage();
         return isElementPresent(By.xpath("//select[@name='new_group']//option[text()='"+group + "']"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 
 
