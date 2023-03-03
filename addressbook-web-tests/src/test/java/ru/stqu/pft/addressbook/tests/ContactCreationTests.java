@@ -9,6 +9,8 @@ import ru.stqu.pft.addressbook.appmanager.ApplicationManager;
 import ru.stqu.pft.addressbook.model.ContactData;
 import ru.stqu.pft.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class ContactCreationTests extends TestBase{
 
 
@@ -21,7 +23,7 @@ public class ContactCreationTests extends TestBase{
         }
         String group = app.wd.findElement(By.name("selected[]")).getAttribute("value");*/
 
-        int before = app.getContactHelper().getContactCount();
+        List<ContactData> before = app.getContactHelper().getContactList();
 
         if (!app.getContactHelper().isThereAGroupInContactCreationForm("test1")){
             app.getNavigationHelper().gotoGroupPage();
@@ -31,8 +33,8 @@ public class ContactCreationTests extends TestBase{
         app.getContactHelper().createContact(new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
                 "Moscow, Tushinskaya st, 17", "+71234567890",
                 "ivanov1981@yandex123.ru", "test1"));
-        int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before + 1);
+        List<ContactData> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size() + 1);
 
     }
 
