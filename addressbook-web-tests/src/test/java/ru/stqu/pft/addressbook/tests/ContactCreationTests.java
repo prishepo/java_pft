@@ -15,13 +15,15 @@ public class ContactCreationTests extends TestBase{
     public void contactCreationTests() throws Exception {
 
         /*app.getNavigationHelper().gotoGroupPage();
-        *//*WebElement groupFromGroupPage = app.wd.findElement(By.name("selected[]"));
-        String group = groupFromGroupPage.getText();*/
+        if (!app.getGroupHelper().isThereAGroup()){
+            app.getGroupHelper().createGroup(new GroupData("test23", null, null));
+        }
+        String group = app.wd.findElement(By.name("selected[]")).getAttribute("value");*/
+
 
         if (!app.getContactHelper().isThereAGroupInContactCreationForm("test1")){
             app.getNavigationHelper().gotoGroupPage();
             app.getGroupHelper().createGroup(new GroupData("test1", null, null));
-
         }
 
         app.getContactHelper().createContact(new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",

@@ -77,6 +77,8 @@ public class ContactHelper extends HelperBase {
     public boolean isThereAGroupInContactCreationForm(String group) {
         gotoContactCreationPage();
         return isElementPresent(By.xpath("//select[@name='new_group']//option[text()='"+group + "']"));
-
     }
+
+
+
 }
