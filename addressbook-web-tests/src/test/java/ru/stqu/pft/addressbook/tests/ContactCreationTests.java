@@ -1,18 +1,14 @@
 package ru.stqu.pft.addressbook.tests;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import ru.stqu.pft.addressbook.appmanager.ApplicationManager;
 import ru.stqu.pft.addressbook.model.ContactData;
 import ru.stqu.pft.addressbook.model.GroupData;
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase{
-
 
     @Test
     public void contactCreationTests() throws Exception {
@@ -29,12 +25,20 @@ public class ContactCreationTests extends TestBase{
             app.getNavigationHelper().gotoGroupPage();
             app.getGroupHelper().createGroup(new GroupData("test1", null, null));
         }
-
-        app.getContactHelper().createContact(new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
+        ContactData contact = new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
                 "Moscow, Tushinskaya st, 17", "+71234567890",
-                "ivanov1981@yandex123.ru", "test1"));
+                "ivanov1981@yandex123.ru", "test1");
+        app.getContactHelper().createContact(contact);
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
+
+
+        contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
+        before.add(contact);
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before,after);
 
     }
 
