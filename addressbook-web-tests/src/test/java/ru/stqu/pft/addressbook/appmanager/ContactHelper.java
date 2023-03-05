@@ -50,9 +50,10 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home"));
     }
 
-    public void editContact() {
+    public void editContact(int index) {
 
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+        /*click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"))*/
+        wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
     }
 
     public void deleteContact() {
@@ -97,10 +98,10 @@ public class ContactHelper extends HelperBase {
         for (WebElement element : elements) {
             String lastName = element.findElement(By.xpath("./td[2]")).getText();
             String firstName = element.findElement(By.xpath("./td[3]")).getText();
-            ContactData contact = new ContactData(firstName, null, lastName, null, null,null,null,null);
+            String id = element.findElement(By.tagName("input")).getAttribute("value");
+            ContactData contact = new ContactData(id, firstName, null, lastName, null, null,null,null,null);
             contacts.add(contact);
         }
-
 
         return contacts;
 
