@@ -1,13 +1,9 @@
 package ru.stqu.pft.addressbook.tests;
 
-import org.checkerframework.checker.units.qual.C;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqu.pft.addressbook.model.ContactData;
-import ru.stqu.pft.addressbook.model.GroupData;
-
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificationTests extends TestBase {
@@ -21,7 +17,7 @@ public class ContactModificationTests extends TestBase {
                     "ivanov1981@yandex123.ru", "test1"));
         }
        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().editContact(before.size() - 1);
+        app.getContactHelper().editContactById(before.size() - 1);
         ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Mihail", "Ivanovich",
                 "Petrov", "KFC", "Moscow, Tallinskaya st., 17", "+70987654321",
                 "petrov991@yandex123.ru", null);

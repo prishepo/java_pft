@@ -50,11 +50,15 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home"));
     }
 
-    public void editContact(int index) {
-
+    public void editContact() {
         click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
-        /*wd.findElements(By.xpath("//table[@class = 'sortcompletecallback-applyZebra']//tr[@name = 'entry']")).get(index).click();*/
     }
+
+    public void editContactById(int index) {
+        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+
+        }
+
 
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
