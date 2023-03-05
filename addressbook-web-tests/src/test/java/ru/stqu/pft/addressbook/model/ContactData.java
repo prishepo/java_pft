@@ -43,6 +43,18 @@ public class ContactData {
         return address;
     }
 
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
     @Override
     public String toString() {
         return "ContactData{" +
@@ -64,15 +76,6 @@ public class ContactData {
         return Objects.hash(firstName, secondName);
     }
 
-    public String getMobilePhoneNumber() {
-        return mobilePhoneNumber;
-    }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public String getGroup() {
-        return group;
-    }
 }
