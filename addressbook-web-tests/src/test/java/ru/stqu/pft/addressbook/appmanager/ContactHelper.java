@@ -59,6 +59,13 @@ public class ContactHelper extends HelperBase {
 
         }
 
+    public void modifyContact(int index, ContactData contact) {
+        editContactById(index);
+        fillContactForm(contact, false);
+        submitContactModification();
+        gotoHomePage();
+    }
+
 
     public void deleteContact() {
         click(By.xpath("//input[@value='Delete']"));
@@ -87,6 +94,7 @@ public class ContactHelper extends HelperBase {
     public boolean isThereAGroupInContactCreationForm(String group) {
         gotoContactCreationPage();
         return isElementPresent(By.xpath("//select[@name='new_group']//option[text()='"+group + "']"));
+
     }
 
     public int getContactCount() {
@@ -110,4 +118,6 @@ public class ContactHelper extends HelperBase {
         return contacts;
 
     }
+
+
 }
