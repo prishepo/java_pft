@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase{
 
-
     @BeforeMethod
     public void ensurePreconditions(){
 
@@ -31,14 +30,15 @@ public class ContactDeletionTests extends TestBase{
     public void testContactDeletion() {
 
         List<ContactData> before = app.contact().list();
-        app.contact().selectContact(before.size() - 1);
-        app.contact().deleteContact();
-        app.contact().gotoHomePage();
+        int index = before.size() -1;
+        app.contact().delete(index);
         List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
 
-        before.remove(before.size()-1);
+        before.remove(index);
         Assert.assertEquals(before, after);
     }
+
+
 }

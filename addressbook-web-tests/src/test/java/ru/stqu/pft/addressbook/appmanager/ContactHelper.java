@@ -1,16 +1,12 @@
 package ru.stqu.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqu.pft.addressbook.model.ContactData;
-import ru.stqu.pft.addressbook.model.GroupData;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +42,7 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public void gotoHomePage() {
+    public void homePage() {
         click(By.linkText("home"));
     }
 
@@ -63,16 +59,22 @@ public class ContactHelper extends HelperBase {
         editContactById(index);
         fillContactForm(contact, false);
         submitContactModification();
-        gotoHomePage();
+        homePage();
     }
 
 
-    public void deleteContact() {
+    public void delete() {
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
     }
 
-    public void selectContact(int index) {
+    public void delete(int index) {
+       select(index);
+       delete();
+       homePage();
+    }
+
+    public void select(int index) {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
@@ -84,7 +86,7 @@ public class ContactHelper extends HelperBase {
         gotoContactCreationPage();
         fillContactForm(contact, true);
         submitContactCreation();
-        gotoHomePage();
+        homePage();
     }
 
     public boolean isThereAContact() {

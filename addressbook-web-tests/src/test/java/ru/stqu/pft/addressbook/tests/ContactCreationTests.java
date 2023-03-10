@@ -18,12 +18,12 @@ public class ContactCreationTests extends TestBase {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
         }
-        app.contact().gotoHomePage();
     }
 
     @Test
     public void contactCreationTests() throws Exception {
 
+        app.goTo().homePage();
         List<ContactData> before = app.contact().list();
         ContactData contact = new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
                 "Moscow, Tushinskaya st, 17", "+71234567890",
