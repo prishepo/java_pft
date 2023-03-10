@@ -97,25 +97,25 @@ public class ContactData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(secondName, that.secondName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, secondName);
+    }
+
+    @Override
     public String toString() {
         return "ContactData{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return Objects.equals(firstName, that.firstName) && Objects.equals(secondName, that.secondName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, secondName);
     }
 
 }
