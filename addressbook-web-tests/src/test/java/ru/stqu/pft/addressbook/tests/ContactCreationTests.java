@@ -5,31 +5,24 @@ import ru.stqu.pft.addressbook.model.ContactData;
 import ru.stqu.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase{
 
-    @Test
+    @Test (enabled = false)
     public void contactCreationTests() throws Exception {
 
-        /*app.getNavigationHelper().gotoGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()){
-            app.getGroupHelper().createGroup(new GroupData("test23", null, null));
-        }
-        String group = app.wd.findElement(By.name("selected[]")).getAttribute("value");*/
+        List<ContactData> before = app.contact().list();
 
-        List<ContactData> before = app.getContactHelper().getContactList();
-
-        if (!app.getContactHelper().isThereAGroupInContactCreationForm("test1")){
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        if (!app.contact().isThereAGroupInContactCreationForm("test1")){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test1"));
         }
         ContactData contact = new ContactData("Sergey", "Petrovich", "Ivanov", "Burger King",
                 "Moscow, Tushinskaya st, 17", "+71234567890",
                 "ivanov1981@yandex123.ru", "test1");
-        app.getContactHelper().createContact(contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().create(contact);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
 

@@ -73,7 +73,7 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         gotoContactCreationPage();
         fillContactForm(contact, true);
         submitContactCreation();
@@ -94,7 +94,7 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List <ContactData> contacts = new ArrayList<ContactData>();
         List <WebElement> elements = wd.findElements(By.xpath("//table[@class = 'sortcompletecallback-applyZebra']//tr[@name = 'entry']"));
 
