@@ -23,7 +23,7 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void contactCreationTests() throws Exception {
 
-        app.goTo().homePage();
+        app.goTo().goToHomePage();
         Contacts before = app.contact().all();
         ContactData contact = new ContactData().withFirstName("Sergey").withMiddleName("Petrovich").withSecondName("Ivanov").withCompanyName("Burger King").
                 withAddress("Moscow, Tushinskaya st, 17").withMobilePhoneNumber("+71234567890").withEmail("ivanov1981@yandex123.ru").withGroup("test1");
