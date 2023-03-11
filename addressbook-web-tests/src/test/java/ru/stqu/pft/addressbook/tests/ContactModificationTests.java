@@ -8,7 +8,6 @@ import ru.stqu.pft.addressbook.model.GroupData;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.*;
 
 public class ContactModificationTests extends TestBase {
 
@@ -20,8 +19,8 @@ public class ContactModificationTests extends TestBase {
        }
 
        if (app.contact().all().size() == 0){
-           app.contact().create(new ContactData().withFirstName("Sergey").withMiddleName("Petrovich").withSecondName("Ivanov").withCompanyName("Burger King").
-                   withAddress("Moscow, Tushinskaya st, 17").withMobilePhoneNumber("+71234567890").withEmail("ivanov1981@yandex123.ru").withGroup("test1"));
+           app.contact().create(new ContactData().withFirstName("Sergey").withMiddleName("Petrovich").withLastName("Ivanov").withCompanyName("Burger King").
+                   withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").withEmail("ivanov1981@yandex123.ru").withGroup("test1"));
        }
    }
 
@@ -30,8 +29,8 @@ public class ContactModificationTests extends TestBase {
        Contacts before = app.contact().all();
        ContactData modifiedContact = before.iterator().next();
        ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstName("Mihail").withMiddleName("Ivanovich").
-               withSecondName("Petrov").withCompanyName("KFC").withAddress("Moscow, Tallinskaya st., 17").
-               withMobilePhoneNumber("+70987654321").withEmail("petrov991@yandex123.ru");
+               withLastName("Petrov").withCompanyName("KFC").withAddress("Moscow, Tallinskaya st., 17").
+               withMobilePhone("+70987654321").withEmail("petrov991@yandex123.ru");
        app.contact().modify(contact);
        assertThat(app.contact().count(), equalTo(before.size()));
        Contacts after = app.contact().all();

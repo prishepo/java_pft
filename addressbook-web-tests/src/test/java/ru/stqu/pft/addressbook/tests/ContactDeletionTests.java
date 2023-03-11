@@ -8,7 +8,6 @@ import ru.stqu.pft.addressbook.model.GroupData;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.testng.Assert.*;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -22,8 +21,8 @@ public class ContactDeletionTests extends TestBase {
 
         if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData().withFirstName("Sergey").
-                    withMiddleName("Petrovich").withSecondName("Ivanov").withCompanyName("Burger King").
-                    withAddress("Moscow, Tushinskaya st, 17").withMobilePhoneNumber("+71234567890").
+                    withMiddleName("Petrovich").withLastName("Ivanov").withCompanyName("Burger King").
+                    withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").
                     withEmail("ivanov1981@yandex123.ru").withGroup("test1"));
         }
     }

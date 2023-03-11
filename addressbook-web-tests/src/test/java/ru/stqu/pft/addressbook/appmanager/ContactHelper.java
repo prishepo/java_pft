@@ -1,6 +1,5 @@
 package ru.stqu.pft.addressbook.appmanager;
 
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,11 +7,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqu.pft.addressbook.model.ContactData;
 import ru.stqu.pft.addressbook.model.Contacts;
-import ru.stqu.pft.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class ContactHelper extends HelperBase {
 
@@ -27,10 +24,10 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"),contactData.getFirstName());
         type(By.name("middlename"), contactData.getMiddleName());
-        type(By.name("lastname"),contactData.getSecondName());
+        type(By.name("lastname"),contactData.getLastName());
         type(By.name("company"),contactData.getCompanyName());
         type(By.name("address"),contactData.getAddress());
-        type(By.name("mobile"),contactData.getMobilePhoneNumber());
+        type(By.name("mobile"),contactData.getMobilePhone());
         type(By.name("email"),contactData.getEmail());
 
 
@@ -50,12 +47,12 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home"));
     }
 
-    public void editContactById(int id) {
+    public void initContactModificationById(int id) {
         wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();
     }
 
     public void modify(ContactData contact) {
-        editContactById(contact.getId());
+        initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         contactCache = null;
@@ -116,10 +113,13 @@ public class ContactHelper extends HelperBase {
         contactCache = new Contacts();
         List <WebElement> elements = wd.findElements(By.xpath("//table[@class = 'sortcompletecallback-applyZebra']//tr[@name = 'entry']"));
         for (WebElement element : elements) {
-            String secondName = element.findElement(By.xpath("./td[2]")).getText();
+
+            String lastName = element.findElement(By.xpath("./td[2]")).getText();
             String firstName = element.findElement(By.xpath("./td[3]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withSecondName(secondName));
+            String allPhones = element.findElement(By.xpath("./td[6]")).getText();
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
+                    .withAllPhones(allPhones));
         }
 
         return new Contacts(contactCache);
@@ -127,5 +127,20 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+        String middlename = wd.findElement(By.name("middlename")).getAttribute("value");
+        String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+        String companyname = wd.findElement(By.name("company")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getAttribute("value");
+        String homephone = wd.findElement(By.name("home")).getAttribute("value");
+        String mobilephone = wd.findElement(By.name("mobile")).getAttribute("value");
+        String workphone = wd.findElement(By.name("work")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstName(firstname).withLastName(lastname).withHomePhone(homephone)
+                .withMobilePhone(mobilephone).withWorkPhone(workphone);
 
+    }
 }
