@@ -1,0 +1,52 @@
+<list>
+  <contact>
+    <firstName>testFirstName 0</firstName>
+    <middleName>testMiddleName 0</middleName>
+    <lastName>testLastName 0</lastName>
+    <companyName>testCompanyName 0</companyName>
+    <address>testAddress 0</address>
+    <mobilePhone>testMobilePhone 0</mobilePhone>
+    <email>testEmail 0</email>
+    <group>TestGroup 0</group>
+  </contact>
+  <contact>
+    <firstName>testFirstName 1</firstName>
+    <middleName>testMiddleName 1</middleName>
+    <lastName>testLastName 1</lastName>
+    <companyName>testCompanyName 1</companyName>
+    <address>testAddress 1</address>
+    <mobilePhone>testMobilePhone 1</mobilePhone>
+    <email>testEmail 1</email>
+    <group>TestGroup 1</group>
+  </contact>
+  <contact>
+    <firstName>testFirstName 2</firstName>
+    <middleName>testMiddleName 2</middleName>
+    <lastName>testLastName 2</lastName>
+    <companyName>testCompanyName 2</companyName>
+    <address>testAddress 2</address>
+    <mobilePhone>testMobilePhone 2</mobilePhone>
+    <email>testEmail 2</email>
+    <group>TestGroup 2</group>
+  </contact>
+  <contact>
+    <firstName>testFirstName 3</firstName>
+    <middleName>testMiddleName 3</middleName>
+    <lastName>testLastName 3</lastName>
+    <companyName>testCompanyName 3</companyName>
+    <address>testAddress 3</address>
+    <mobilePhone>testMobilePhone 3</mobilePhone>
+    <email>testEmail 3</email>
+    <group>TestGroup 3</group>
+  </contact>
+  <contact>
+    <firstName>testFirstName 4</firstName>
+    <middleName>testMiddleName 4</middleName>
+    <lastName>testLastName 4</lastName>
+    <companyName>testCompanyName 4</companyName>
+    <address>testAddress 4</address>
+    <mobilePhone>testMobilePhone 4</mobilePhone>
+    <email>testEmail 4</email>
+    <group>TestGroup 4</group>
+  </contact>
+</list>
