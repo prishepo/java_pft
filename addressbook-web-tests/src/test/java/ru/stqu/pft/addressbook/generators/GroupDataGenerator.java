@@ -45,7 +45,6 @@ public class GroupDataGenerator {
             writer.write(String.format("%s;%s;%s\n", group.getName(),group.getHeader(),group.getFooter()));
         }
         writer.close();
-
     }
 
     private List<GroupData> generateGroups(int count) {

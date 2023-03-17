@@ -33,7 +33,7 @@ public class ContactCreationTests extends TestBase {
                 withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").withEmail("ivanov1981@yandex123.ru").withGroup("test1")});
         list.add(new Object[]{new ContactData().withFirstName("Fedor").withMiddleName("Alexandrovich").withLastName("Sidorov").withCompanyName("KFC").
                 withAddress("Moscow, Tverskaya st, 22").withMobilePhone("+7262344").withEmail("Sidorov@mail.ru").withGroup("test2")});
-        list.add(new Object[]{new ContactData().withFirstName("Nikolay").withMiddleName("Mihaylovich").withLastName("Semenov").withCompanyName("Mcdonald's").
+        list.add(new Object[]{new ContactData().withFirstName("Nikolay").withMiddleName("Mihaylovich").withLastName("Semenov").withCompanyName("Mcdonalds").
                 withAddress("Tula, Isacovskovo st, 16a").withMobilePhone("+788888888").withEmail("ivanov1981@yandex123.ru").withGroup("test3")});
         return list.iterator();
     }
