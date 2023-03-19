@@ -30,3 +30,4 @@ sandbox/build.gradle
 .idea/gradle.xml
 .idea/.name
 sandbox/out/test/classes/ru/stqa/pft/sandbox/PointTests.class
+*.log
