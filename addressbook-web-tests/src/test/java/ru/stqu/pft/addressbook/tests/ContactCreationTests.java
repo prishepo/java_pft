@@ -1,6 +1,7 @@
 package ru.stqu.pft.addressbook.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.BeforeMethod;
@@ -75,7 +76,7 @@ public class ContactCreationTests extends TestBase {
     public void contactCreationTests(ContactData contact) throws Exception {
         app.goTo().goToHomePage();
         Contacts before = app.contact().all();
-        File photo = new File("src/test/resourses/stru.png");
+        File photo = new File("src/test/resources/stru.png");
         /*withPhoto(photo);*/
         app.contact().create(contact);
         assertThat(app.contact().count(), equalTo(before.size()+1));
