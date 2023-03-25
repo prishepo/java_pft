@@ -20,7 +20,7 @@ public class ContactDeletionTests extends TestBase {
         }else
             app.contact().homePage();
 
-        if (app.contact().all().size() == 0) {
+        if (app.db().contacts().size() == 0) {
             app.contact().create(new ContactData().withFirstName("Sergey").
                     withMiddleName("Petrovich").withLastName("Ivanov").withCompanyName("Burger King").
                     withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").

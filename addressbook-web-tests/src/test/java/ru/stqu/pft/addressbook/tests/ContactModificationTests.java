@@ -19,11 +19,18 @@ public class ContactModificationTests extends TestBase {
        }else
            app.contact().homePage();
 
-       if (app.contact().all().size() == 0){
+       if (app.db().contacts().size()==0){
            app.contact().create(new ContactData().withFirstName("Sergey").withMiddleName("Petrovich").withLastName("Ivanov").withCompanyName("Burger King").
                    withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").withEmail("ivanov1981@yandex123.ru").withGroup("test1"));
        }
    }
+
+    /* if(app.db().groups().size()== 0) {
+        app.goTo().groupPage();
+        app.group().create(new GroupData().withName("test2"));
+        app.group().returnToGroupPage();
+
+    }*/
 
     @Test
     public void testContactModification(){
