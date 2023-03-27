@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import ru.stqu.pft.addressbook.model.ContactData;
 import ru.stqu.pft.addressbook.model.Contacts;
 import ru.stqu.pft.addressbook.model.GroupData;
+import ru.stqu.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +26,7 @@ import static org.hamcrest.MatcherAssert.*;
 
 public class ContactCreationTests extends TestBase {
 
-    @BeforeMethod
+    /*@BeforeMethod
     public void ensurePreconditions() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
         String line = reader.readLine();
@@ -38,7 +39,16 @@ public class ContactCreationTests extends TestBase {
                 line = reader.readLine();
         }
 
+    }*/
+
+    @BeforeMethod
+    public void ensurePreconditions() {
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test1"));
+        }
     }
+
 
     @DataProvider
     public Iterator<Object[]> validContactsFromXml() throws IOException {
@@ -74,11 +84,12 @@ public class ContactCreationTests extends TestBase {
 
     @Test (dataProvider = "validContactsFromJson")
     public void contactCreationTests(ContactData contact) throws Exception {
+        Groups groups = app.db().groups();
         app.goTo().goToHomePage();
         Contacts before = app.db().contacts();
         File photo = new File("src/test/resources/stru.png");
         /*withPhoto(photo);*/
-        app.contact().create(contact);
+        app.contact().create(contact.inGroup(groups.iterator().next()));
         assertThat(app.contact().count(), equalTo(before.size()+1));
         Contacts after = app.db().contacts();
         assertThat(after, equalTo(

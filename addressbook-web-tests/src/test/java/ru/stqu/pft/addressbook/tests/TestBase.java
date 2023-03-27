@@ -51,13 +51,14 @@ public class TestBase {
     }
 
     public void verifyContactListInUI() {
+        Groups groups = app.db().groups();
         if (Boolean.getBoolean("verifyUI")) {
             Contacts dbContacts = app.db().contacts();
             Contacts uiContacts = app.contact().all();
             assertThat(uiContacts, equalTo(dbContacts.stream().map((c)-> new ContactData().withId(c.getId())
                     .withFirstName(c.getFirstName()).withMiddleName(c.getMiddleName()).withLastName(c.getLastName())
                     .withCompanyName(c.getCompanyName()).withAddress(c.getAddress()).withMobilePhone(c.getMobilePhone())
-                    .withEmail(c.getEmail()).withGroup(c.getGroup()))
+                    .withEmail(c.getEmail()).inGroup(groups.iterator().next()))
                     .collect(Collectors.toSet())));
 
         }

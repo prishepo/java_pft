@@ -4,10 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @XStreamAlias("contact")
@@ -49,15 +52,17 @@ public class ContactData {
     @Column (name = "email3")
     private String email3;
 
-    @Expose
-    @Transient
-    private String group;
+
     @Transient
     private String allPhones;
     @Transient
     private String allEmails;
     @Column (name = "photo")
     private String photo;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
 
 
 
@@ -135,10 +140,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
 
     public String getAllPhones() {
         return allPhones;
@@ -201,8 +202,8 @@ public class ContactData {
         return email3;
     }
 
-    public String getGroup() {
-        return group;
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     @Override
@@ -225,6 +226,11 @@ public class ContactData {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + lastName + '\'' +
                 '}';
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
     }
 
 }

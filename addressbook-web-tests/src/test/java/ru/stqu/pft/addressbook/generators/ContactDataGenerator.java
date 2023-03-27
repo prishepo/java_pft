@@ -76,7 +76,7 @@ public class ContactDataGenerator {
         try (Writer writer = new FileWriter(file)){
             for (ContactData contact : contacts){
                 writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstName(),contact.getMiddleName(),contact.getLastName(),contact.getCompanyName(),
-                        contact.getAddress(), contact.getMobilePhone(),contact.getEmail(), contact.getGroup()));
+                        contact.getAddress(), contact.getMobilePhone(),contact.getEmail()));
             }
         }
     }
@@ -91,8 +91,7 @@ public class ContactDataGenerator {
                     .withCompanyName(String.format("testCompanyName %s" ,i))
                     .withAddress(String.format("testAddress %s" ,i))
                     .withMobilePhone(String.format("testMobilePhone %s" ,i))
-                    .withEmail(String.format("testEmail %s" ,i))
-                    .withGroup(String.format("TestGroup %s" ,i)));
+                    .withEmail(String.format("testEmail %s" ,i)));
 
         }
         return contacts;
