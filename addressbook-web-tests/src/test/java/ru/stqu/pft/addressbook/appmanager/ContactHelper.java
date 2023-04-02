@@ -152,4 +152,22 @@ public class ContactHelper extends HelperBase {
         .withHomePhone(homephone).withMobilePhone(mobilephone).withWorkPhone(workphone).withEmail(email).withEmail2(email2).withEmail3(email3);
 
     }
+
+    public void selectGroupFromList(int groupId) {
+        wd.findElement(By.xpath("//select[@name='to_group']/option[@value='" + groupId + "']")).click();
+    }
+
+
+    public void addContactToSelectedGroup() {
+        wd.findElement(By.name("add")).click();
+    }
+
+
+    public void selectContactByIdForAddingToGroup(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    }
+
+    public void addintToGroupContact(ContactData contact) {
+        selectContactByIdForAddingToGroup(contact.getId());
+    }
 }
