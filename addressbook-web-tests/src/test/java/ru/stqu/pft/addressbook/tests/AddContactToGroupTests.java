@@ -89,7 +89,7 @@ public class AddContactToGroupTests extends TestBase {
                 break;
             }
         }
-     MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));*/
+     MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));
 
     }
 
