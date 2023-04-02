@@ -24,6 +24,23 @@ public class AddContactToGroupTests extends TestBase {
 
     private SessionFactory sessionFactory;
 
+
+    @BeforeClass
+    protected void setUpInTestOfAddingAContactToGroup() throws Exception {
+        // A SessionFactory is set up once for an application!
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        try {
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+            // so destroy it manually.
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+    }
+
     @BeforeMethod
     public void ensurePreconditions() {
         Groups groups = app.db().groups();
@@ -44,48 +61,35 @@ public class AddContactToGroupTests extends TestBase {
     }
 
 
-    @BeforeClass
-    protected void setUpInTestOfAddingAContactToGroup() throws Exception {
-        // A SessionFactory is set up once for an application!
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            StandardServiceRegistryBuilder.destroy(registry);
-        }
-    }
-
 
     @Test
    public void testAddedContactToGroup() {
-
-        app.contact().homePage();
         Contacts contacts = app.db().contacts();
+        ContactData contact = contacts.iterator().next();
         Groups group = app.db().groups();
-
         GroupData groupBeforeAddContact = group.iterator().next();
-        ContactData addedToGroupContact = contacts.iterator().next();
-
-        app.contact().addintToGroupContact(addedToGroupContact);
+        Session session = sessionFactory.openSession();
+        Groups contactGroups = contact.getGroups();
+        if (contactGroups.contains(groupBeforeAddContact)){
+            app.goTo().groupPage();
+            GroupData groupForContact = new GroupData().withName("GroupForContact");
+            app.group().create(groupForContact);
+            groupBeforeAddContact = groupForContact;
+        }
+        app.contact().homePage();
+        app.contact().addintToGroupContact(contact);
         app.contact().selectGroupFromList(groupBeforeAddContact.getId());
         app.contact().addContactToSelectedGroup();
-
         GroupData groupAfterAddContact = groupBeforeAddContact;
-        Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<GroupData> Groups = session.createQuery("from GroupData").list();
-        for (int i = 0; i < Groups.size(); i++) {
-            if (groupBeforeAddContact.getId() == Groups.get(i).getId()){
-                groupAfterAddContact = Groups.get(i);
+        List<GroupData> groups = session.createQuery("from GroupData").list();
+        for (int i = 0; i < groups.size(); i++) {
+            if (groupBeforeAddContact.getId() == groups.get(i).getId()){
+                groupAfterAddContact = groups.get(i);
                 break;
             }
         }
-     // MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));
+     MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));*/
 
     }
 
