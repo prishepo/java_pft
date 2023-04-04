@@ -18,18 +18,15 @@ import ru.stqu.pft.addressbook.model.GroupData;
 import ru.stqu.pft.addressbook.model.Groups;
 
 import javax.swing.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class AddContactToGroupTests extends TestBase {
+public class ContactDeletionFromGroupTest extends TestBase {
 
     private SessionFactory sessionFactory;
 
 
     @BeforeClass
-    protected void setUpInTestOfAddingAContactToGroup() throws Exception {
+    protected void setUpInTestOfDeletionFromGroupContact() throws Exception {
         // A SessionFactory is set up once for an application!
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
@@ -66,40 +63,40 @@ public class AddContactToGroupTests extends TestBase {
 
 
     @Test
-   public void testAddedContactToGroup() {
+    public void testDeletionContactFromGroup() {
         Contacts contacts = app.db().contacts();
         ContactData contact = contacts.iterator().next();
         Groups group = app.db().groups();
-        GroupData groupBeforeAddContact = group.iterator().next();
+        GroupData groupBeforeDeleteContact = group.iterator().next();
         Session session = sessionFactory.openSession();
         Groups contactGroups = contact.getGroups();
         session.beginTransaction();
         List<GroupData> groups = session.createQuery("from GroupData").list();
 
-        if (contactGroups.contains(groupBeforeAddContact)){
+        if (contactGroups.contains(groupBeforeDeleteContact)){
             app.goTo().groupPage();
             GroupData groupForContact = new GroupData().withName("GroupForContact");
             app.group().create(groupForContact);
             app.goTo().goToHomePage();
             group = app.db().groups();
-            Collections.sort(groups, (g1, g2) -> g1.getId() - g2.getId());
-            groupBeforeAddContact = groups.get(groups.size()-1);
+            groupBeforeDeleteContact = groupForContact;
+            System.out.println(groupBeforeDeleteContact.getId());
+
         }
 
         app.contact().homePage();
         app.contact().addintToGroupContact(contact);
-        app.contact().selectGroupFromList(groupBeforeAddContact.getId());
+        app.contact().selectGroupFromList(groupBeforeDeleteContact.getId());
         app.contact().addContactToSelectedGroup();
-        GroupData groupAfterAddContact = groupBeforeAddContact;
+        GroupData groupAfterDeleteContact = groupBeforeDeleteContact;
         for (int i = 0; i < groups.size(); i++) {
-            if (groupBeforeAddContact.getId() == groups.get(i).getId()){
-                groupAfterAddContact = groups.get(i);
+            if (groupBeforeDeleteContact.getId() == groups.get(i).getId()){
+                groupAfterDeleteContact = groups.get(i);
                 break;
             }
         }
-     MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));
+        MatcherAssert.assertThat(groupBeforeDeleteContact.getContacts(), CoreMatchers.equalTo(groupAfterDeleteContact.getContacts()));
 
     }
 
 }
-

@@ -46,6 +46,10 @@ public class DbHelper {
 
     }
 
+    public Groups getGroupFromDbById(Groups group){
+        return group;
+    }
+
 
 
 
