@@ -1,6 +1,5 @@
 package ru.stqu.pft.addressbook.tests;
 
-import org.checkerframework.checker.units.qual.C;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.Session;
@@ -8,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +15,7 @@ import ru.stqu.pft.addressbook.model.Contacts;
 import ru.stqu.pft.addressbook.model.GroupData;
 import ru.stqu.pft.addressbook.model.Groups;
 
-import javax.swing.*;
+import java.util.Collections;
 import java.util.List;
 
 public class ContactDeletionFromGroupTest extends TestBase {
@@ -58,6 +56,7 @@ public class ContactDeletionFromGroupTest extends TestBase {
                     withAddress("Moscow, Tushinskaya st, 17").withMobilePhone("+71234567890").
                     withEmail("ivanov1981@yandex123.ru"));
         }
+
     }
 
 
@@ -67,35 +66,45 @@ public class ContactDeletionFromGroupTest extends TestBase {
         Contacts contacts = app.db().contacts();
         ContactData contact = contacts.iterator().next();
         Groups group = app.db().groups();
-        GroupData groupBeforeDeleteContact = group.iterator().next();
+        GroupData groupForDeletionContact = group.iterator().next();
         Session session = sessionFactory.openSession();
         Groups contactGroups = contact.getGroups();
+        Contacts contactsInGroup = groupForDeletionContact.getContacts();
         session.beginTransaction();
-        List<GroupData> groups = session.createQuery("from GroupData").list();
 
-        if (contactGroups.contains(groupBeforeDeleteContact)){
-            app.goTo().groupPage();
-            GroupData groupForContact = new GroupData().withName("GroupForContact");
-            app.group().create(groupForContact);
+        List<GroupData> groupsList = session.createQuery("from GroupData").list();
+        List<ContactData> contactsList = session.createQuery("from ContactData").list();
+
+        app.goTo().goToHomePage();
+        app.contact().selectGroupFromList(groupForDeletionContact.getId());
+
+        if (!contactsInGroup.contains(contact)) {
+            app.contact().selectAll();
+            app.contact().addintToGroupContact(contact);
+            app.contact().selectGroupFromListToAddContact(groupForDeletionContact.getId());
+            app.contact().addContactToSelectedGroup();
             app.goTo().goToHomePage();
-            group = app.db().groups();
-            groupBeforeDeleteContact = groupForContact;
-            System.out.println(groupBeforeDeleteContact.getId());
-
+            app.contact().selectGroupFromList(groupForDeletionContact.getId());
+            /*ContactData newContactForGroup = new ContactData()
+                    .withFirstName("Alexander")
+                    .withMiddleName("Petrovich")
+                    .withLastName("Ivanov").inGroup(groupForDeletionContact);
+            app.contact().create(newContactForGroup);
+            Collections.sort(contactsList, (c1, c2) -> c1.getId() - c2.getId());
+            contact = contactsList.get(contactsList.size()-1);*/
         }
 
-        app.contact().homePage();
-        app.contact().addintToGroupContact(contact);
-        app.contact().selectGroupFromList(groupBeforeDeleteContact.getId());
-        app.contact().addContactToSelectedGroup();
-        GroupData groupAfterDeleteContact = groupBeforeDeleteContact;
-        for (int i = 0; i < groups.size(); i++) {
-            if (groupBeforeDeleteContact.getId() == groups.get(i).getId()){
-                groupAfterDeleteContact = groups.get(i);
+        app.contact().selectContactByIdForAddingToGroup(contact.getId());
+        app.contact().deleteFromGroup();
+        app.goTo().goToHomePage();
+        GroupData groupAfterDeleteContact = groupForDeletionContact;
+        for (int i = 0; i < groupsList.size(); i++) {
+            if (groupForDeletionContact.getId() == groupsList.get(i).getId()){
+                groupAfterDeleteContact = groupsList.get(i);
                 break;
             }
         }
-        MatcherAssert.assertThat(groupBeforeDeleteContact.getContacts(), CoreMatchers.equalTo(groupAfterDeleteContact.getContacts()));
+        MatcherAssert.assertThat(groupForDeletionContact.getContacts(), CoreMatchers.equalTo(groupAfterDeleteContact.getContacts()));
 
     }
 

@@ -1,6 +1,5 @@
 package ru.stqu.pft.addressbook.tests;
 
-import org.checkerframework.checker.units.qual.C;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.Session;
@@ -8,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,10 +15,7 @@ import ru.stqu.pft.addressbook.model.Contacts;
 import ru.stqu.pft.addressbook.model.GroupData;
 import ru.stqu.pft.addressbook.model.Groups;
 
-import javax.swing.*;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class AddContactToGroupTests extends TestBase {
@@ -81,15 +76,17 @@ public class AddContactToGroupTests extends TestBase {
             GroupData groupForContact = new GroupData().withName("GroupForContact");
             app.group().create(groupForContact);
             app.goTo().goToHomePage();
-            group = app.db().groups();
+            groups = session.createQuery("from GroupData").list();
             Collections.sort(groups, (g1, g2) -> g1.getId() - g2.getId());
             groupBeforeAddContact = groups.get(groups.size()-1);
+            System.out.println(groups);
         }
 
         app.contact().homePage();
         app.contact().addintToGroupContact(contact);
-        app.contact().selectGroupFromList(groupBeforeAddContact.getId());
+        app.contact().selectGroupFromListToAddContact(groupBeforeAddContact.getId());
         app.contact().addContactToSelectedGroup();
+        app.goTo().goToHomePage();
         GroupData groupAfterAddContact = groupBeforeAddContact;
         for (int i = 0; i < groups.size(); i++) {
             if (groupBeforeAddContact.getId() == groups.get(i).getId()){
