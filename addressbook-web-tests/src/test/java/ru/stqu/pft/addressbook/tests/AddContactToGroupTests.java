@@ -4,6 +4,7 @@ import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -70,16 +71,18 @@ public class AddContactToGroupTests extends TestBase {
         Groups contactGroups = contact.getGroups();
         session.beginTransaction();
         List<GroupData> groups = session.createQuery("from GroupData").list();
+        session.getTransaction().commit();
 
         if (contactGroups.contains(groupBeforeAddContact)){
             app.goTo().groupPage();
             GroupData groupForContact = new GroupData().withName("GroupForContact");
             app.group().create(groupForContact);
             app.goTo().goToHomePage();
-            groups = session.createQuery("from GroupData").list();
-            Collections.sort(groups, (g1, g2) -> g1.getId() - g2.getId());
-            groupBeforeAddContact = groups.get(groups.size()-1);
-            System.out.println(groups);
+            Transaction transaction = session.beginTransaction();
+            List<GroupData> groupsAfterCreateGr = session.createQuery("from GroupData").list();
+            transaction.commit();
+            groupsAfterCreateGr.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
+            groupBeforeAddContact = groupsAfterCreateGr.get(groupsAfterCreateGr.size()-1);
         }
 
         app.contact().homePage();

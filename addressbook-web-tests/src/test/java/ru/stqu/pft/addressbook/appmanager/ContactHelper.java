@@ -185,6 +185,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectAll() {
-        wd.findElement(By.xpath("//select[@name='group']/option[@value='[none]']")).click();
+        Select groupList = new Select(wd.findElement(By.xpath("//select[@name='group']")));
+        groupList.selectByVisibleText("[all]");
     }
 }
