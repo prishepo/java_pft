@@ -45,7 +45,7 @@ public class AddContactToGroupTests extends TestBase {
     public void ensurePreconditions() {
         Groups groups = app.db().groups();
 
-        if (!app.contact().isThereAGroupInContactCreationForm("test1")) {
+        if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
             groups = app.db().groups();
@@ -91,6 +91,7 @@ public class AddContactToGroupTests extends TestBase {
         app.contact().selectGroupFromListToAddContact(groupBeforeAddContact.getId());
         app.contact().addContactToSelectedGroup();
         app.goTo().goToHomePage();
+        session.clear();
         Transaction transaction = session.beginTransaction();
         List<GroupData> groupsAfterAddContact = session.createQuery("from GroupData").list();
         transaction.commit();
