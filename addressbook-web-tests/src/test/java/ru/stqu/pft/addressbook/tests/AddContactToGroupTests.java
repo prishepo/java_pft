@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -73,33 +74,37 @@ public class AddContactToGroupTests extends TestBase {
         List<GroupData> groups = session.createQuery("from GroupData").list();
         session.getTransaction().commit();
 
-        if (contactGroups.contains(groupBeforeAddContact)){
-            app.goTo().groupPage();
-            GroupData groupForContact = new GroupData().withName("GroupForContact");
-            app.group().create(groupForContact);
-            app.goTo().goToHomePage();
-            Transaction transaction = session.beginTransaction();
-            List<GroupData> groupsAfterCreateGr = session.createQuery("from GroupData").list();
-            transaction.commit();
-            groupsAfterCreateGr.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
-            groupBeforeAddContact = groupsAfterCreateGr.get(groupsAfterCreateGr.size()-1);
-        }
+      if (contactGroups.contains(groupBeforeAddContact)) {
+          app.goTo().groupPage();
+          GroupData groupForContact = new GroupData().withName("GroupForContact");
+          app.group().create(groupForContact);
+          app.goTo().goToHomePage();
+          Transaction transaction = session.beginTransaction();
+          List<GroupData> groupsAfterCreateGr = session.createQuery("from GroupData").list();
+          transaction.commit();
+          groupsAfterCreateGr.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
+          groupBeforeAddContact = groupsAfterCreateGr.get(groupsAfterCreateGr.size() - 1);
+      }
 
         app.contact().homePage();
         app.contact().addintToGroupContact(contact);
         app.contact().selectGroupFromListToAddContact(groupBeforeAddContact.getId());
         app.contact().addContactToSelectedGroup();
         app.goTo().goToHomePage();
+        Transaction transaction = session.beginTransaction();
+        List<GroupData> groupsAfterAddContact = session.createQuery("from GroupData").list();
+        transaction.commit();
         GroupData groupAfterAddContact = groupBeforeAddContact;
-        for (int i = 0; i < groups.size(); i++) {
-            if (groupBeforeAddContact.getId() == groups.get(i).getId()){
-                groupAfterAddContact = groups.get(i);
+        for (int i = 0; i < groupsAfterAddContact.size(); i++) {
+            if (groupBeforeAddContact.getId() == groupsAfterAddContact.get(i).getId()){
+                groupAfterAddContact = groupsAfterAddContact.get(i);
                 break;
             }
         }
-     MatcherAssert.assertThat(groupBeforeAddContact.getContacts(), CoreMatchers.equalTo(groupAfterAddContact.getContacts()));
+
+        Assert.assertTrue(groupAfterAddContact.getContacts().contains(contact));
+
 
     }
-
 }
 
