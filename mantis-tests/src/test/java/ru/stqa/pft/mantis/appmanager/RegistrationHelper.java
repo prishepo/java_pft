@@ -15,4 +15,7 @@ public class RegistrationHelper extends TestBase {
     }
 
 
+    public void start(String username, String email) {
+        wd.get(app.getProperty("web.baseUrl") + "/signup_page.php");
+    }
 }
