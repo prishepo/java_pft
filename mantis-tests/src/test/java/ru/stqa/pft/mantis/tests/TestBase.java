@@ -1,4 +1,4 @@
-package ru.stqu.pft.mantis.tests;
+package ru.stqa.pft.mantis.tests;
 import org.openqa.selenium.remote.Browser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
