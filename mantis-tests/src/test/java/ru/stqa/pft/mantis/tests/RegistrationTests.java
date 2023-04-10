@@ -21,8 +21,6 @@ public class RegistrationTests extends TestBase {
     }
 
 
-
-
     @Test
     public void testRegistration() throws IOException, MessagingException {
         Long now = System.currentTimeMillis();
