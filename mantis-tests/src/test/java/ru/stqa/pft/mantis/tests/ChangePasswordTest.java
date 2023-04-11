@@ -21,6 +21,7 @@ public class ChangePasswordTest extends TestBase {
         app.adminActions().goToManagePage();
         app.adminActions().goToContactsManagePage();
         System.out.println(app.db().users());
+        app.adminActions().selectUser();
 
 
 
