@@ -56,7 +56,6 @@ public class JamesHelper {
         String login = app.getProperty("mailserver.adminlogin");
         String password = app.getProperty("mailserver.adminpassword");
 
-
         try {
             telnet.connect(mailserver, port);
             in = telnet.getInputStream();
@@ -66,15 +65,15 @@ public class JamesHelper {
             e.printStackTrace();
         }
 
+     /*   readUntil("Login id:");
+        write("");
+        readUntil("Password:");
+        write("");*/
+
         readUntil("Login id:");
         write(login);
-        readUntil("Password:");
-        write(password);
-
-        /*readUntil("Login id:");
-        write(login);
         readUntil("Password");
-        write(password);*/
+        write(password);
 
         readUntil("Welcome " + login + ". HELP for a list of commands");
 
