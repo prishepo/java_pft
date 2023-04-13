@@ -2,7 +2,10 @@ package ru.stqa.pft.mantis.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
-;import java.util.Objects;
+import ru.stqu.pft.addressbook.model.Users;
+;import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 
 @Table(name = "mantis_user_table")
@@ -21,7 +24,6 @@ public class UserData {
 
     @Column(name = "password")
     private String password;
-
 
     public UserData withId(int id) {
         this.id = id;

@@ -29,11 +29,18 @@ public class AdminHelper extends HelperBase {
 
     }
 
+    public void selectUserById(int id) {
+        wd.findElement(By.xpath("//a[@href='manage_user_edit_page.php?user_id=" + id + "']")).click();
+    }
 
 
+    public void pushChangePasswordButton() {
+        wd.findElement(By.xpath("//input[@value='Сбросить пароль']")).click();
+    }
 
-
-
-
-
+    public void changePassword(String confirmationLink, String newPassword, String confirmNewPassword){
+        wd.get(confirmationLink);
+        type(By.name(""), newPassword);
+        type(By.name(""), confirmNewPassword);
+    }
 }
