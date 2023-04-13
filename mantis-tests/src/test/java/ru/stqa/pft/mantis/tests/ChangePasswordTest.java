@@ -56,14 +56,18 @@ public class ChangePasswordTest extends TestBase {
         String email = String.format(userForChangePassword.getEmail());
         String username = String.format(userForChangePassword.getUsername());
         String password = String.format(userForChangePassword.getPassword());
+        String passwordForMail = "password";
         String newPassword = String.format("password%s", now);
-        app.james().createUser(username, password);
         app.adminActions().authorization();
         app.adminActions().goToManagePage();
         app.adminActions().goToContactsManagePage();
         app.adminActions().selectUserById(userForChangePassword.getId());
         app.adminActions().pushChangePasswordButton();
-        List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+        if (!app.james().doesUserExist(username)){
+            app.james().createUser(username,passwordForMail);
+        }
+        app.james().drainEmail(username,passwordForMail);
+        List<MailMessage> mailMessages = app.james().waitForMail(username, passwordForMail, 60000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.adminActions().changePassword(confirmationLink, newPassword, newPassword);
         assertTrue(app.newSession().login(username, newPassword));

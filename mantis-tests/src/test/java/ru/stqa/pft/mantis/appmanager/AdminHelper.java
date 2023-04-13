@@ -40,7 +40,8 @@ public class AdminHelper extends HelperBase {
 
     public void changePassword(String confirmationLink, String newPassword, String confirmNewPassword){
         wd.get(confirmationLink);
-        type(By.name(""), newPassword);
-        type(By.name(""), confirmNewPassword);
+        type(By.name("password"), newPassword);
+        type(By.name("password_confirm"), confirmNewPassword);
+        click(By.xpath("//span[.='Изменить пользователя']"));
     }
 }
