@@ -22,6 +22,7 @@ public class ApplicationManager {
     private JamesHelper jamesHelper;
     private AdminHelper adminHelper;
     private DbHelper dbHelper;
+    private SoapHelper soapHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -43,7 +44,7 @@ public class ApplicationManager {
         }
     }
 
-    public HttpSession newSession(){
+    public HttpSession newSession() {
         return new HttpSession(this);
     }
 
@@ -55,18 +56,16 @@ public class ApplicationManager {
         return registrationHelper;
     }
 
-    public FtpHelper ftp(){
+    public FtpHelper ftp() {
         if (ftp == null) {
             ftp = new FtpHelper(this);
         }
         return ftp;
     }
 
-    public DbHelper db(){
+    public DbHelper db() {
         return dbHelper;
     }
-
-
 
 
     public WebDriver getDriver() {
@@ -85,7 +84,7 @@ public class ApplicationManager {
         return wd;
     }
 
-    public MailHelper mail(){
+    public MailHelper mail() {
         if (mailHelper == null) {
             mailHelper = new MailHelper(this);
         }
@@ -96,7 +95,7 @@ public class ApplicationManager {
         return properties.getProperty(key);
     }
 
-    public JamesHelper james (){
+    public JamesHelper james() {
         if (jamesHelper == null) {
             jamesHelper = new JamesHelper(this);
         }
@@ -110,5 +109,10 @@ public class ApplicationManager {
         return adminHelper;
     }
 
-
+    public SoapHelper soap() {
+        if (soapHelper == null) {
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
+    }
 }

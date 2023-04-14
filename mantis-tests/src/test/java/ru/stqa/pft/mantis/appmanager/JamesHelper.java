@@ -146,6 +146,7 @@ public class JamesHelper {
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 e.printStackTrace();
+                now = System.currentTimeMillis();
             }
         }
         throw new Error("No mail :(");
