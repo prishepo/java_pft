@@ -50,11 +50,7 @@ public class TestBase {
     private boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = getMantisConnect();
         IssueData findIssueById = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
-        Issue issue = new Issue().withId(findIssueById.getId().intValue());
-        System.out.println(findIssueById.getStatus());
-        return true;
-
-
+        return !(findIssueById.getStatus().getName().equals("resolved"));
 
     }
 
