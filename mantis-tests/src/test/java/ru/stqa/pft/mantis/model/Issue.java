@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.model;
 
+import biz.futureware.mantis.rpc.soap.client.ObjectRef;
 import org.hamcrest.core.Is;
 
 public class Issue {
@@ -8,6 +9,25 @@ public class Issue {
     private String summary;
     private String description;
     private Project project;
+    private ObjectRef resolution;
+
+    public ObjectRef getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(ObjectRef resolution) {
+        this.resolution = resolution;
+    }
+
+    public boolean isFixed() {
+        return fixed;
+    }
+
+    public void isFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
+
+    private boolean fixed;
 
     public int getId() {
         return id;
@@ -44,4 +64,6 @@ public class Issue {
         this.project = project;
         return this;
     }
+
+
 }
