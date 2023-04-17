@@ -26,16 +26,12 @@ public class TestBase {
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issuesStatus = parsed.getAsJsonObject().get("state_name");
         return !(issuesStatus.toString().equals("Resolved"));
-        
+
     }
 
     private Executor getExecutor() {
         return Executor.newInstance().auth("b31e382ca8445202e66b03aaf31508a3", "");
 
     }
-
-
-
-
 
 }
