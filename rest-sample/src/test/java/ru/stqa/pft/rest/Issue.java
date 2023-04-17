@@ -7,6 +7,12 @@ public class Issue {
     private int id;
     private String subject;
     private String description;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
 
 
 
