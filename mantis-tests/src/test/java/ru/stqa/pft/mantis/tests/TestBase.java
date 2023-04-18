@@ -24,6 +24,7 @@ public class TestBase {
             = new ApplicationManager(System.getProperty("browser", Browser.FIREFOX.browserName()));
 
 
+
     @BeforeSuite
     public void setUp() throws Exception {
         app.init();
@@ -49,7 +50,7 @@ public class TestBase {
 
     private boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = getMantisConnect();
-        IssueData findIssueById = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(issueId));
+        IssueData findIssueById = mc.mc_issue_get(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"), BigInteger.valueOf(issueId));
         return !(findIssueById.getStatus().getName().equals("resolved"));
 
     }
