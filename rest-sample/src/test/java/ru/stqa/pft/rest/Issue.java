@@ -7,10 +7,14 @@ public class Issue {
     private int id;
     private String subject;
     private String description;
-    private String status;
+    private String state_name;
 
     public String getStatus() {
-        return status;
+        return state_name;
+    }
+    public Issue withStatus(String state_name) {
+        this.state_name = state_name;
+        return this;
     }
 
 
@@ -34,15 +38,6 @@ public class Issue {
         return this;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public Issue withDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +49,15 @@ public class Issue {
     @Override
     public int hashCode() {
         return Objects.hash(id, subject, description);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Issue withDescription(String description) {
+        this.description = description;
+        return this;
     }
 
 }

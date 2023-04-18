@@ -34,7 +34,7 @@ public class RestAssuredTests {
     }
 
     private Set<Issue> getIssues() throws IOException {
-        String json = RestAssured.get("https://bugify.stqa.ru/api/issues.json?Size=500").asString();
+        String json = RestAssured.get("https://bugify.stqa.ru/api/issues.json?pageSize=500").asString();
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
 
