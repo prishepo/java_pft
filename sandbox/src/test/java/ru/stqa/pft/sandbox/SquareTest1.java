@@ -7,6 +7,6 @@ public class SquareTest1 {
     @Test
     public void testAres() {
         Square1 s = new Square1(5);
-        Assert.assertEquals(s.area(), 25.0);
+        Assert.assertEquals(s.area(), 20.0);
     }
 }
