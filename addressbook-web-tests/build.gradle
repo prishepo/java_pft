@@ -5,6 +5,8 @@ repositories{
     mavenCentral()
 }
 
+
+
 dependencies {
     implementation 'org.testng:testng:7.7.1'
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
@@ -15,9 +17,24 @@ dependencies {
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.6'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.32'
     implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.2.0.CR4'
+    implementation group: 'io.qameta.allure', name: 'allure-testng', version: '2.13.4'
+    runtimeOnly 'org.aspectj:aspectjweaver:1.9.19'
+    implementation group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.20.1'
 
 
 }
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.qameta.allure.gradle.allure:allure-plugin:2.11.2"
+    }
+}
+
+apply plugin: "io.qameta.allure"
 
 task testGroups (type: Test){
     useTestNG() {
@@ -35,6 +52,9 @@ task testGroups (type: Test){
     if (project.hasProperty('verifyUI')){
         systemProperty 'verifyUI', "${verifyUI}"
     }
+}
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
 task testContacts (type: Test){
@@ -54,6 +74,7 @@ task testContacts (type: Test){
     if (project.hasProperty('verifyUI')){
         systemProperty 'verifyUI', "${verifyUI}"
     }
+
 
 
 }

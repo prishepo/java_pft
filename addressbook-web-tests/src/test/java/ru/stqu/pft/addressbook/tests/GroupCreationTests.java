@@ -78,7 +78,7 @@ public class GroupCreationTests extends TestBase {
         app.goTo().groupPage();
         Groups before = app.db().groups();
         GroupData group = new GroupData().withName("test'");
-        app.group().create(group);
+      //  app.group().create(group); закомментировано для проверки создания скриншота
         app.group().returnToGroupPage();
         assertThat(app.group().count(), equalTo(before.size()));
         Groups after = app.db().groups();
