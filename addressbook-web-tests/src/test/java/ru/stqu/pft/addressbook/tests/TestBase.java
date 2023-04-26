@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
-@Listeners (MyTestListener.class)
+/*@Listeners (MyTestListener.class)*/
 public class TestBase {
 
     Logger logger = LoggerFactory.getLogger(TestBase.class);

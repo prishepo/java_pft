@@ -1,4 +1,16 @@
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.qameta.allure.gradle.allure:allure-plugin:2.11.2"
+    }
+}
 apply plugin: 'java'
+apply plugin: "io.qameta.allure"
 
 
 repositories{
@@ -53,9 +65,9 @@ task testGroups (type: Test){
         systemProperty 'verifyUI', "${verifyUI}"
     }
 }
-testGroups.doFirst {
+/*testGroups.doFirst {
     jvmArgs "-javaagent:${configurations.agent.singleFile}"
-}
+}*/
 
 task testContacts (type: Test){
     useTestNG() {
